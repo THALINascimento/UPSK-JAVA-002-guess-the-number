@@ -31,6 +31,9 @@ orientada a objetos (OOP). O objetivo deste projeto é te introduzir ao mundo do
 Java por meio de um jogo simples e divertido.
 
 
+
+
+
 ![GUESS THE NUMBER](assets/guess-the-number.png)
 
 ## 3. Resumo do Projeto
@@ -46,7 +49,23 @@ foi "muito alta" ou "muito baixa".
 
 ### Java & OOP
 
-* [ ] **Tipos de dados: primitivos vs não primitivos**
+* [☕] **Tipos de dados: primitivos vs não primitivos**
+  é um dado que não é representado através de um Objeto e, por consequência, não possui métodos.
+  byte:
+  short: Representa números inteiros de 16 bits. O intervalo é maior do que isso byte.
+  int: Representa números inteiros de 32 bits. É
+  long: Representa números
+  float: Representa números de ponto flutuante de 32 bits. É usado para números reais.
+  double: Representa números de ponto flutuante de 64 bits. É usado para números reais com alta precisão.
+  char: Representa um único caractere Unicode. Exemplo: 'A', '1'.
+  boolean: Representa valores verdadeiros ou falsos.
+  Tipos de Referência:
+
+String: Uma sequência de caracteres.
+Arrays: Coleções de elementos do mesmo tipo, como int[], String[], etc.
+Classes Personalizadas: Tipos de dados definidos pelo programador, como classes,
+Interfaces: Especificações de métodos que uma
+Enumerações (Enum): Tipos especiais usados ​​para representar um conjunto fixo de valores.
 * [ ] **Strings (cadeias de caracteres)**
 * [ ] **Arrays (matrizes)**
 * [ ] **_Access Modifiers_: `private`**
