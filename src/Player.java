@@ -1,23 +1,23 @@
+import java.util.ArrayList;
 import java.util.List;
+
 public abstract class Player {
-    private String nome;
-    private List<Integer> apostas;
+    private String name;
+    protected List<Integer> guesses = new ArrayList<>();
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<Integer> getApostas() {
-        return apostas;
+    public List<Integer> getGuess() {
+
+        return guesses;
     }
 
-    public void setApostas(List<Integer> apostas) {
-        this.apostas = apostas;
-    }
 
     public abstract Integer makeGuess();
 }

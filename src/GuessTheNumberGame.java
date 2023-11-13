@@ -1,104 +1,83 @@
 
-//import java.util.Random;
-//import java.util.Scanner;
-//public class GuessTheNumberGame { //O jogo será realizado no terminal.Será usado um número aleatório entre 1 e 100 como número secreto.
-//    private static final Random random = new Random();
-//    private static int targetNumber;
-//
-//    public static void main(String[] args) {
-//        System.out.println("Hello world, JAVA!!!!! que os jogos comecem"); //como reiniciar a partida ? loop ?
-//
-//            Player humano = new HumanPlayer();
-//            humano.setNome("Digite seu nome: ");
-//
-//            Player computador = new ComputerPlayer();
-//            computador.setNome("ComputerPlayer");
-//
-//            printaTerminal(humano);
-//            printaTerminal(computador);
-//
-//        Scanner scanner = new Scanner(System.in);
-//
-//            System.out.println("Digite um número de 1 a 100");
-//            int num1 = scanner.nextInt();
-//            int rand1 = (int) random.nextInt(100) + 1;
-//
-//            int acertos = 0;
-//            if( num1 == rand1){
-//                ++acertos;
-//            }
-//            System.out.println("Fim de jovo! Você acertou: " + acertos);
-//        }
-//
-//public static void printaTerminal(Player player) {
-//    System.out.println(player.getNome());
-//    System.out.println(player.makeGuess());
-//    System.out.println("------------------");
-//}
-//}
-
-public static void main(String[] args) {
-        System.out.println("Hello world, JAVA!!!!!");
-
-        Player humano = new HumanPlayer();
-        humano.setNome("Digite seu nome");
-        humeno.nextInt()
-
-
-        Player computador = new ComputerPlayer();
-        computador.setNome("Karen");
-
-        printaTerminal(humano);
-        printaTerminal(computador);
-
-
-        }
-
-
 import java.util.Random;
+import java.util.Scanner;
 
 public class GuessTheNumberGame {
-    private static Random random = new Random();
+    private static Random random;
     private static int targetNumber;
+    private static boolean inciarJogo = true;
+    public static int tentativas = 0;
+    public static final int maximoTentativas = 5;
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        targetNumber = random.nextInt(100) + 1;
-        Player humanPlayer = new HumanPlayer("Thali");
-        Player computerPlayer = new ComputerPlayer("Computador");
 
-        Player currentPlayer = humanPlayer;
+        random = new Random();
+
+        targetNumber = random.nextInt(100) + 1;
+
+        System.out.println("\n\uD83C\uDFB2 Adivinhe o número sorteado!\n" +
+                "\n" +
+                "\uD83C\uDFAF Você deve escolher um número de 1 a 100 e possui 5 chances de acertar.\n" +
+                "\n" +
+                "\uD83C\uDF40 Boa sorte!");
+        System.out.println(targetNumber); //não printar esse número depois
+
         while (true) {
-            checkGuess(currentPlayer);
-            if (currentPlayer.hasGuessed()) {
-                displayGameResult(currentPlayer);
+            System.out.println("\n\uD83C\uDFAE Quer iniciar o jogo? (sim/não)");
+            String sim = scanner.nextLine().toLowerCase();
+            if (sim.equalsIgnoreCase("sim")) {
+                break;
+            } else if (sim.equalsIgnoreCase("não")) {
+                System.out.println("\uD83D\uDC4B Obrigado por jogar! Até mais!");
+                return;
+            } else {
+                System.out.println("\uD83D\uDC4E Resposta inválida! Digite 'sim' ou 'não'.");
+            }
+        }
+        System.out.println("\nO jogo está começando!");
+        System.out.println("Digite seu nome: ");
+        String name = scanner.nextLine();
+        System.out.println("\nBem vindo: " + name);
+
+        Player human = new HumanPlayer();
+        human.setName(name);
+
+        Player computer = new ComputerPlayer();
+        computer.setName("\nCOMPUTADOR");
+
+        do {
+            tentativas++;
+            System.out.println("\n\033[1;33mRound:" + tentativas + "\033[0m");
+            boolean inciarHumano = chekGuess(human);
+            if (inciarHumano) {
+                boolean iniciarComputer = chekGuess(computer);
+                if (!iniciarComputer) {
+                    break;
+                }
+            } else {
+                System.out.println("Você acertou em: " + tentativas + " rounds.");
                 break;
             }
-            currentPlayer = (currentPlayer instanceof HumanPlayer) ? computerPlayer : humanPlayer;
+
+        } while (inciarJogo && tentativas < maximoTentativas);
+        if (tentativas == maximoTentativas) {
+            System.out.println("\n \u274C\u001B[31m GAMEOVER \033[0m \u001B[31m\uD83D\uDC80\u001B[0m");
         }
     }
-
-    public static void checkGuess(Player player) {
+    public static boolean chekGuess(Player player) {
         int guess = player.makeGuess();
         if (guess < targetNumber) {
-            System.out.println(player.getName() + " fez a aposta " + guess + " (Muito Baixa)");
+            System.out.println("\033[0;36mMuito baixo!\033[0m");
         } else if (guess > targetNumber) {
-            System.out.println(player.getName() + " fez a aposta " + guess + " (Muito Alta)");
-        } else {
-            player.setGuessed(true);
+            System.out.println("\033[0;36mMuito alto!\033[0m");
+        } else if (guess == targetNumber) {
+            System.out.println("\n\uD83C\uDFC6" + player.getName() + ", você venceu!");
+            System.out.println("você apostou no número " + guess + " e essas foram as suas suposições: " + player.getGuess() + ".");
+            inciarJogo = false;
         }
+        player.getGuess();
+        return inciarJogo;
     }
 
-    public static void displayGameResult(Player winner) {
-        System.out.println("Fim do jogo!");
-        System.out.println(winner.getName() + " advinhou o número " + targetNumber + " corretamente!");
-        System.out.println("Tentativas de " + winner.getName() + ": " + winner.getGuesses());
-    }
-}
-
-
-    public static void printaTerminal(Player player) {
-        System.out.println(player.getNome());
-        System.out.println(player.makeGuess());
-        System.out.println("------------------");
-    }
 }

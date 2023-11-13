@@ -8,7 +8,7 @@
 * [4. Objetivos de Aprendizagem](#4-objetivos-de-aprendizado)
 * [5. Considerações Gerais](#5-considerações-gerais)
 * [6. Considerações Técnicas](#6-considerações-técnicas)
-* [7. Recomendações](#7-recomendações)
+* [7. Recomendações](#7-Recomendações)
 
 ---
 

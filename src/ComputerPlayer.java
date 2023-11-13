@@ -1,14 +1,15 @@
+import java.util.Collections;
 import java.util.Random;
-public class ComputerPlayer extends Player{
-    private static Random random = new Random();
+import java.util.Scanner;
 
-    public ComputerPlayer(String name) {
-        super(name);
+public class ComputerPlayer extends Player {
+    protected Random random;
 
     @Override
     public Integer makeGuess() {
-        return random.nextInt(100) + 1;
-        guesses.add(guess);
-        return guess;
+        random = new Random();
+        int guessComputer = random.nextInt(100) + 1;
+        System.out.println(getName() + ", digite seu palpite: " + guessComputer);
+        return guessComputer;
     }
 }
