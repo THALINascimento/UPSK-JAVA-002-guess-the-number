@@ -3,28 +3,33 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessTheNumberGame {
-    private static Random random;
-    private static int targetNumber;
-    private static boolean inciarJogo = true;
-    public static int tentativas = 0;
+
+    private Random random;
+    int targetNumber;
+
+    public int tentativas = 0;
     public static final int maximoTentativas = 5;
     public static Scanner scanner = new Scanner(System.in);
 
+    public GuessTheNumberGame(Random random) {
+        this.random = random;
+        this.targetNumber = random.nextInt(100) + 1;
+    }
     public static void main(String[] args) {
 
-        random = new Random();
+        GuessTheNumberGame game = new GuessTheNumberGame(new Random());
 
-        targetNumber = random.nextInt(100) + 1;
+                System.out.println("""
 
-        System.out.println("\n\uD83C\uDFB2 Adivinhe o número sorteado!\n" +
-                "\n" +
-                "\uD83C\uDFAF Você deve escolher um número de 1 a 100 e possui 5 chances de acertar.\n" +
-                "\n" +
-                "\uD83C\uDF40 Boa sorte!");
-        System.out.println(targetNumber); //não printar esse número depois
+                \uD83C\uDFB2 Adivinhe o número sorteado!
+
+                \uD83C\uDFAF Você deve escolher um número de 1 a 100 e possui 5 chsimances de acertar.
+
+                \uD83C\uDF40 Boa sorte!""");
+        System.out.println(game.targetNumber); //estou printando a aposta random
 
         while (true) {
-            System.out.println("\n\uD83C\uDFAE Quer iniciar o jogo? (sim/não)");
+            System.out.println("\n\uD83C\uDFAE Quer iniciar o jogo? (sim/não?)");
             String sim = scanner.nextLine().toLowerCase();
             if (sim.equalsIgnoreCase("sim")) {
                 break;
@@ -47,37 +52,40 @@ public class GuessTheNumberGame {
         computer.setName("\nCOMPUTADOR");
 
         do {
-            tentativas++;
-            System.out.println("\n\033[1;33mRound:" + tentativas + "\033[0m");
-            boolean inciarHumano = chekGuess(human);
+            game.tentativas++;
+            System.out.println("\n\033[1;33mRound:" + game.tentativas + "\033[0m");
+            boolean inciarHumano = game.chekGuess(human);
             if (inciarHumano) {
-                boolean iniciarComputer = chekGuess(computer);
+                boolean iniciarComputer = game.chekGuess(computer);
                 if (!iniciarComputer) {
                     break;
                 }
             } else {
-                System.out.println("Você acertou em: " + tentativas + " rounds.");
+                System.out.println("Você acertou em: " + game.tentativas + " rounds.");
                 break;
             }
 
-        } while (inciarJogo && tentativas < maximoTentativas);
-        if (tentativas == maximoTentativas) {
-            System.out.println("\n \u274C\u001B[31m GAMEOVER \033[0m \u001B[31m\uD83D\uDC80\u001B[0m");
-        }
-    }
-    public static boolean chekGuess(Player player) {
+        } while (game.tentativas < maximoTentativas);
+             if (game.tentativas == maximoTentativas) {
+                System.out.println("\n ❌ \u001B[31m GAMEOVER \033[0m \u001B[31m\uD83D\uDC80\u001B[0m");
+            }
+         }
+
+     public boolean chekGuess(Player player) {
         int guess = player.makeGuess();
-        if (guess < targetNumber) {
+        if (guess < this.targetNumber) {
             System.out.println("\033[0;36mMuito baixo!\033[0m");
-        } else if (guess > targetNumber) {
+        } else if (guess > this.targetNumber) {
             System.out.println("\033[0;36mMuito alto!\033[0m");
-        } else if (guess == targetNumber) {
+        } else {
             System.out.println("\n\uD83C\uDFC6" + player.getName() + ", você venceu!");
             System.out.println("você apostou no número " + guess + " e essas foram as suas suposições: " + player.getGuess() + ".");
-            inciarJogo = false;
+            return false;
         }
-        player.getGuess();
-        return inciarJogo;
+        //player.getGuess();
+        return true;
     }
 
 }
+
+
